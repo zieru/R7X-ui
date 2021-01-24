@@ -16,12 +16,19 @@
     vue-container-query "^0.1.0"
     vue-copy-to-clipboard "^1.0.3"
 
-"@ant-design/colors@^3.1.0", "@ant-design/colors@^3.2.2":
+"@ant-design/colors@^3.1.0":
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/@ant-design/colors/-/colors-3.2.2.tgz#5ad43d619e911f3488ebac303d606e66a8423903"
   integrity sha512-YKgNbG2dlzqMhA9NtI3/pbY16m3Yl/EeWBRa+lB1X1YaYxHrxNexiQYCLTWO/uDvAjLFMEDU+zR901waBtMtjQ==
   dependencies:
     tinycolor2 "^1.4.1"
+
+"@ant-design/colors@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@ant-design/colors/-/colors-5.0.1.tgz#09670f2f44a7473d7bc01be901c48ec10f12c7a4"
+  integrity sha512-x1TUaRILaqy3zgFNo+kIqOa3eTYPt81H1/3E4dCjDP4Qvk/xaPEizLDFdRUcIx0cWwyu2LklwfyLHWpbYK8v6A==
+  dependencies:
+    "@ctrl/tinycolor" "^3.3.1"
 
 "@ant-design/icons-vue@^2.0.0":
   version "2.0.0"
@@ -1083,6 +1090,11 @@
   dependencies:
     exec-sh "^0.3.2"
     minimist "^1.2.0"
+
+"@ctrl/tinycolor@^3.3.1":
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.3.3.tgz#980487763bc7c9238d6d88d1ac0dee2d4df3df68"
+  integrity sha512-v75yutF4BDMv9weDQVM+K5XEfjiODhugSV729pnoxtBDO61ij2CsDnQa4N4E9xGaH3/FX5ASZjnajljT2F71tA==
 
 "@hapi/address@2.x.x":
   version "2.1.4"
