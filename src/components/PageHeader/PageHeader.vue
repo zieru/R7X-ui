@@ -1,5 +1,9 @@
 <template>
-  <div class="page-header">
+  <div
+    class="page-header"
+    style="background: url(https://images.pexels.com/photos/538571/pexels-photo-538571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
+    background-position: right;
+    background-attachment: fixed;">
     <div class="page-header-index-wide">
       <s-breadcrumb />
       <div class="detail">

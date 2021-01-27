@@ -1,13 +1,13 @@
 <template>
   <a-modal
-    title="Tambah kriteria"
+    title="Tambah Alternatif"
     :visible="visible"
     :confirm-loading="confirmLoading"
     @ok="handleOk"
     @cancel="handleCancel"
   >
     <a-form-model :model="form" layout="vertical">
-      <a-form-model-item label="Nama Kriteria">
+      <a-form-model-item label="Nama Alternatif">
         <a-input v-model="form.name" />
       </a-form-model-item>
     </a-form-model>
