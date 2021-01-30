@@ -20,7 +20,7 @@
         <template slot="title">
           <span v-if="Object.keys(formMatrix).length !== this.lengthMatrix">Select all matrix to submit</span>
         </template>
-        <a-button :disabled="Object.keys(formMatrix).length !== this.lengthMatrix" type="primary" @click="submitForm('ruleForm')">
+        <a-button :disabled="Object.keys(formMatrix).length !== this.lengthMatrix" type="primary" @click="submitForm()">
           Submit
         </a-button>
       </a-tooltip>
@@ -88,6 +88,7 @@
                     this.clearKriteria()
                     if (data) {
                         this.form.name = data.data.nm_alternatif
+                        this.form.id = data.data.id_alternatif
                         this.$http.get('api/v1/kriteria').then(data => {
                             this.datakriteria = data.data
                             this.lengthMatrix = Object.keys(this.datakriteria).length
@@ -109,10 +110,11 @@
             showModal () {
                 this.visible = true
             },
-            handleOk (e) {
+            submitForm (e) {
                 console.log(this.form)
-                this.$http.post('api/v1/alternatif', {
-                    name: this.form.name
+                this.$http.post('api/v1/matrix', {
+                    kriteria: this.formMatrix,
+                    alternatif: this.form.id
                 })
                 /* this.ModalText = 'The modal will be closed after two seconds'
                 this.confirmLoading = true
@@ -124,9 +126,6 @@
             handleCancel (e) {
                 console.log('Clicked cancel button')
                 this.visible = false
-            },
-            onSubmit () {
-                console.log('submit!', this.form)
             }
         }
     }
