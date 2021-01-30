@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "cross-env NODE_ENV=production vue-cli-service --max_old_space_size=256 build",
+    "build": "cross-env NODE_ENV=production vue-cli-service build",
+    "build-low": "cross-env NODE_ENV=production vue-cli-service --max_old_space_size=256 build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "build:preview": "vue-cli-service build --mode preview",
