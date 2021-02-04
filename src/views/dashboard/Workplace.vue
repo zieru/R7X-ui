@@ -11,10 +11,10 @@
           <a-col :span="12">
             <a-card title="Data Kriteria">
               <a-space size="small" slot="extra">
-              <a-button type="primary" :loading="datakriteria.loading" @click="fetchkriteria()">
-                <a-icon type="reload" />  Refresh data
-              </a-button>
-              <a-button type="primary" @click="showDrawer()"> <a-icon type="plus" /> Kriteria </a-button>
+                <a-button type="primary" :loading="datakriteria.loading" @click="fetchkriteria()">
+                  <a-icon type="reload" />  Refresh data
+                </a-button>
+                <a-button type="primary" @click="showDrawer()"> <a-icon type="plus" /> Kriteria </a-button>
               </a-space>
               <a-drawer
                 title="Kriteria Baru"
@@ -75,31 +75,32 @@
                 <a-button slot="extra" type="primary" @click="showAlternatif()"> <a-icon type="plus" /> Alternatif </a-button>
               </a-space>
               <a-row>
-                <a-col> <a-table
-                  class="table-dark"
-                  :bordered="true"
-                  :data-source="dataalternatif.data"
-                  :loading="dataalternatif.loading"
-                  :pagination="false"
-                  :row-key="record => 'b_' + record.id_alternatif"
-                  @change="handleTableChangeperfomance"
-                  size="small"
-                  :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
-                >
-                  <a-table-column data-index="id_alternatif">
-                    <span slot="title">ID Alternatif</span>
-                  </a-table-column>
-                  <a-table-column data-index="nm_alternatif">
-                    <span slot="title">Nama Alternatif</span>
-                  </a-table-column>
-                  <a-table-column title="Action">
-                    <template slot-scope="text, record">
-                <span>
-                  <a-button type="primary" ghost @click="showMatrix(record.id_alternatif)"><a-icon type="setting"/> Matrix {{ record.nm_alternatif }}</a-button>
-                </span>
-                    </template>
-                  </a-table-column>
-                </a-table>
+                <a-col>
+                  <a-table
+                    class="table-dark"
+                    :bordered="true"
+                    :data-source="dataalternatif.data"
+                    :loading="dataalternatif.loading"
+                    :pagination="false"
+                    :row-key="record => 'b_' + record.id_alternatif"
+                    @change="handleTableChangeperfomance"
+                    size="small"
+                    :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
+                  >
+                    <a-table-column data-index="id_alternatif">
+                      <span slot="title">ID Alternatif</span>
+                    </a-table-column>
+                    <a-table-column data-index="nm_alternatif">
+                      <span slot="title">Nama Alternatif</span>
+                    </a-table-column>
+                    <a-table-column title="Action">
+                      <template slot-scope="text, record">
+                        <span>
+                          <a-button type="primary" ghost @click="showMatrix(record.id_alternatif)"><a-icon type="setting"/> Matrix {{ record.nm_alternatif }}</a-button>
+                        </span>
+                      </template>
+                    </a-table-column>
+                  </a-table>
                 </a-col>
               </a-row>
               <TambahAlternatif ref="TambahAlternatif"/>
