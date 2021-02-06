@@ -14,7 +14,7 @@
     "lint:nofix": "vue-cli-service lint --no-fix"
   },
   "dependencies": {
-    "@ant-design-vue/pro-layout": "^1.0.1",
+    "@ant-design-vue/pro-layout": "^1.0.8",
     "@antv/data-set": "latest",
     "@vue/cli-plugin-pwa": "^4.5.6",
     "ant-design-vue": "^1.7.2",
