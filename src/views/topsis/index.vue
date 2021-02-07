@@ -1,10 +1,12 @@
 <template>
   <div class="card-container">
     <a-card title="Hasil Topsis">
+      <a-button type="primary" slot="extra" @click="fetch()">Reload</a-button>
     <a-tabs tab-position="left">
       <a-tab-pane key="1" tab="Nilai Matrix">
         <a-table
           :columns="datamatrix.columns"
+          :data-source="datamatrix.data"
           class="table-dark"
           :bordered="true"
           :pagination="false"
@@ -37,20 +39,9 @@
     const columns = [
         {
             title: 'No',
-            dataIndex: 'name',
-            key: 'name',
+            dataIndex: 'no',
+            key: 'no',
             width: 100,
-            fixed: 'left',
-            filters: [
-                {
-                    text: 'Joe',
-                    value: 'Joe'
-                },
-                {
-                    text: 'John',
-                    value: 'John'
-                }
-            ],
             onFilter: (value, record) => record.name.indexOf(value) === 0
         },
         {
@@ -99,8 +90,16 @@
         data () {
             return {
                 datamatrix: {
-                    columns: columns
+                    columns: columns,
+                    data: []
                 }
+            }
+        },
+        methods: {
+            fetch () {
+                this.$http.get('api/v1/matrix/hasil').then(data => {
+                  this.datamatrix.data = data.data
+                })
             }
         }
     }
