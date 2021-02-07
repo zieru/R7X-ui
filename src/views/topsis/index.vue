@@ -29,18 +29,6 @@
       </a-tab-pane>
       <a-tab-pane key="3" tab="Nilai Bobot Ternormalisasi">
         <a-table
-          :columns="datamatrixnormalisasi.columns"
-          :data-source="datamatrixnormalisasi.data"
-          class="table-dark"
-          :bordered="true"
-          :pagination="false"
-          size="small"
-          :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
-        >
-        </a-table>
-      </a-tab-pane>
-      <a-tab-pane key="4" tab="Nilai Ideal Positif / Negatif">
-        <a-table
           :columns="datamatrixbobotnormalisasi.columns"
           :data-source="datamatrixbobotnormalisasi.data"
           class="table-dark"
@@ -51,6 +39,18 @@
         >
         </a-table>
       </a-tab-pane>
+      <!--<a-tab-pane key="4" tab="Nilai Ideal Positif / Negatif">
+        <a-table
+          :columns="datamatrixbobotnormalisasi.columns"
+          :data-source="datamatrixbobotnormalisasi.data"
+          class="table-dark"
+          :bordered="true"
+          :pagination="false"
+          size="small"
+          :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
+        >
+        </a-table>
+      </a-tab-pane>-->
     </a-tabs>
     </a-card>
   </div>
