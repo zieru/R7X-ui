@@ -16,19 +16,40 @@
         </a-table>
       </a-tab-pane>
       <a-tab-pane key="2" tab="Nilai Matrix Ternormalisasi">
-        <p>Content of Tab Pane 2</p>
-        <p>Content of Tab Pane 2</p>
-        <p>Content of Tab Pane 2</p>
+        <a-table
+          :columns="datamatrixnormalisasi.columns"
+          :data-source="datamatrixnormalisasi.data"
+          class="table-dark"
+          :bordered="true"
+          :pagination="false"
+          size="small"
+          :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
+        >
+        </a-table>
       </a-tab-pane>
       <a-tab-pane key="3" tab="Nilai Bobot Ternormalisasi">
-        <p>Content of Tab Pane 3</p>
-        <p>Content of Tab Pane 3</p>
-        <p>Content of Tab Pane 3</p>
+        <a-table
+          :columns="datamatrixnormalisasi.columns"
+          :data-source="datamatrixnormalisasi.data"
+          class="table-dark"
+          :bordered="true"
+          :pagination="false"
+          size="small"
+          :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
+        >
+        </a-table>
       </a-tab-pane>
       <a-tab-pane key="4" tab="Nilai Ideal Positif / Negatif">
-        <p>Content of Tab Pane 3</p>
-        <p>Content of Tab Pane 3</p>
-        <p>Content of Tab Pane 3</p>
+        <a-table
+          :columns="datamatrixbobotnormalisasi.columns"
+          :data-source="datamatrixbobotnormalisasi.data"
+          class="table-dark"
+          :bordered="true"
+          :pagination="false"
+          size="small"
+          :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
+        >
+        </a-table>
       </a-tab-pane>
     </a-tabs>
     </a-card>
@@ -92,6 +113,14 @@
                 datamatrix: {
                     columns: columns,
                     data: []
+                },
+                datamatrixnormalisasi: {
+                    columns: columns,
+                    data: []
+                },
+                datamatrixbobotnormalisasi: {
+                    columns: columns,
+                    data: []
                 }
             }
         },
@@ -99,6 +128,15 @@
             fetch () {
                 this.$http.get('api/v1/matrix/hasil').then(data => {
                   this.datamatrix.data = data.data
+                })
+                this.$http.get('api/v1/matrix/normalisasi').then(data => {
+                    this.datamatrixnormalisasi.data = data.data
+                })
+                this.$http.get('api/v1/matrix/normalisasi').then(data => {
+                    this.datamatrixnormalisasi.data = data.data
+                })
+                this.$http.get('api/v1/matrix/bobotnormalisasi').then(data => {
+                    this.datamatrixbobotnormalisasi.data = data.data
                 })
             }
         }
