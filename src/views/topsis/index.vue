@@ -2,43 +2,43 @@
   <div class="card-container">
     <a-card title="Hasil Topsis">
       <a-button type="primary" slot="extra" @click="fetch()">Reload</a-button>
-    <a-tabs tab-position="left">
-      <a-tab-pane key="1" tab="Nilai Matrix">
-        <a-table
-          :columns="datamatrix.columns"
-          :data-source="datamatrix.data"
-          class="table-dark"
-          :bordered="true"
-          :pagination="false"
-          size="small"
-          :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
-        >
-        </a-table>
-      </a-tab-pane>
-      <a-tab-pane key="2" tab="Nilai Matrix Ternormalisasi">
-        <a-table
-          :columns="datamatrixnormalisasi.columns"
-          :data-source="datamatrixnormalisasi.data"
-          class="table-dark"
-          :bordered="true"
-          :pagination="false"
-          size="small"
-          :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
-        >
-        </a-table>
-      </a-tab-pane>
-      <a-tab-pane key="3" tab="Nilai Bobot Ternormalisasi">
-        <a-table
-          :columns="datamatrixbobotnormalisasi.columns"
-          :data-source="datamatrixbobotnormalisasi.data"
-          class="table-dark"
-          :bordered="true"
-          :pagination="false"
-          size="small"
-          :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
-        >
-        </a-table>
-      </a-tab-pane>
+      <a-tabs tab-position="left">
+        <a-tab-pane key="1" tab="Nilai Matrix">
+          <a-table
+            :columns="datamatrix.columns"
+            :data-source="datamatrix.data"
+            class="table-dark"
+            :bordered="true"
+            :pagination="false"
+            size="small"
+            :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
+          >
+          </a-table>
+        </a-tab-pane>
+        <a-tab-pane key="2" tab="Nilai Matrix Ternormalisasi">
+          <a-table
+            :columns="datamatrixnormalisasi.columns"
+            :data-source="datamatrixnormalisasi.data"
+            class="table-dark"
+            :bordered="true"
+            :pagination="false"
+            size="small"
+            :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
+          >
+          </a-table>
+        </a-tab-pane>
+        <a-tab-pane key="3" tab="Nilai Bobot Ternormalisasi">
+          <a-table
+            :columns="datamatrixbobotnormalisasi.columns"
+            :data-source="datamatrixbobotnormalisasi.data"
+            class="table-dark"
+            :bordered="true"
+            :pagination="false"
+            size="small"
+            :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
+          >
+          </a-table>
+        </a-tab-pane>
       <!--<a-tab-pane key="4" tab="Nilai Ideal Positif / Negatif">
         <a-table
           :columns="datamatrixbobotnormalisasi.columns"
@@ -51,7 +51,7 @@
         >
         </a-table>
       </a-tab-pane>-->
-    </a-tabs>
+      </a-tabs>
     </a-card>
   </div>
 </template>
@@ -96,13 +96,13 @@
                     dataIndex: 'C4',
                     align: 'center',
                     key: 'C4'
-                },
+                }/*,
                 {
                     title: 'C5',
                     dataIndex: 'C5',
                     align: 'center',
                     key: 'C5'
-                }
+                } */
             ]
         }
     ]
