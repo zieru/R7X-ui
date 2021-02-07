@@ -132,9 +132,6 @@
                 this.$http.get('api/v1/matrix/normalisasi').then(data => {
                     this.datamatrixnormalisasi.data = data.data
                 })
-                this.$http.get('api/v1/matrix/normalisasi').then(data => {
-                    this.datamatrixnormalisasi.data = data.data
-                })
                 this.$http.get('api/v1/matrix/bobotnormalisasi').then(data => {
                     this.datamatrixbobotnormalisasi.data = data.data
                 })
