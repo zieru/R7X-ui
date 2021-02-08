@@ -3,7 +3,7 @@
 
             <repository-form ref="repository" :showSubmit="false" />
 
-            <a-button type="primary" @click="validate" :loading="loading">Create User</a-button>
+            <a-button type="primary" @click="validate" :loading="loading">Submit</a-button>
             <span class="popover-wrapper">
                <a-popover title="Form verification information" overlayClassName="antd-pro-pages-forms-style-errorPopover" trigger="click" :getPopupContainer="trigger => trigger.parentNode">
                  <template slot="content">
