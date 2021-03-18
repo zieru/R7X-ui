@@ -4,7 +4,7 @@
       <!-- <a-button type="primary" block @click="OpenLogin()" shape="round">
               Login With {{ AppName }} Connect
             </a-button> -->
-      <a-form
+      <!--<a-form
         id="formLogin"
         class="user-layout-login"
         ref="formLogin"
@@ -44,13 +44,13 @@
         </a-form-item>
         <a-form-item>
           <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">Remember</a-checkbox>
-          <!--
+          &lt;!&ndash;
                   <router-link
                     :to="{ name: 'recover', params: { user: 'aaa'} }"
                     class="forget-password"
                     style="float: right;"
                   >Reset Password</router-link>
-                  -->
+                  &ndash;&gt;
         </a-form-item>
         <a-form-item style="margin-top:24px">
           <a-button
@@ -69,7 +69,7 @@
             :disabled="state.loginBtn"
           >Sign In As Guest</a-button>
         </a-form-item>
-        <!--
+        &lt;!&ndash;
                 <div class="user-login-other">
                   &lt;!&ndash;<button @click="SocialLogin3()">auth Google</button>&ndash;&gt;
                   &lt;!&ndash; <span>其他登录方式</span>
@@ -84,8 +84,8 @@
                   </a> &ndash;&gt;
                   &lt;!&ndash;<router-link class="register" :to="{ name: 'register' }">注册账户</router-link> &ndash;&gt;
                 </div>
-                -->
-      </a-form>
+                &ndash;&gt;
+      </a-form>-->
 
       <!-- <two-step-captcha
                 v-if="requiredTwoStepCaptcha"
@@ -93,6 +93,10 @@
                 @success="stepCaptchaSuccess"
                 @cancel="stepCaptchaCancel"
               ></two-step-captcha> -->
+      <a-spin>
+        <a-icon slot="indicator" type="loading" style="font-size: 24px" spin />
+      </a-spin>
+      Loading...
     </div>
   </div>
 
@@ -114,6 +118,7 @@ export default {
   },
   data: function () {
     return {
+      indicator: '<a-icon type="loading" style="font-size: 24px" spin />',
       email: '',
       password: '',
       customActiveKey: 'tab1',
@@ -151,6 +156,9 @@ export default {
       */
     // this.requiredTwoStepCaptcha = true
   },
+    mounted () {
+        this.handleGuest()
+    },
   methods: {
       OpenLogin () {
 	// alert(process.env.VUE_APP_API_BASE_URL)

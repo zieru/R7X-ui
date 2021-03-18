@@ -11,7 +11,7 @@
             :bordered="true"
             :pagination="false"
             size="small"
-            :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
+            :row-key="(record, index) => 'Matrixxx_' + index"
           >
           </a-table>
         </a-tab-pane>
@@ -23,7 +23,7 @@
             :bordered="true"
             :pagination="false"
             size="small"
-            :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
+            :row-key="(record, index) => 'Matrix0_' + index"
           >
           </a-table>
         </a-tab-pane>
@@ -35,22 +35,61 @@
             :bordered="true"
             :pagination="false"
             size="small"
-            :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
+            :row-key="(record, index) => 'Matrixx_' + index"
           >
           </a-table>
         </a-tab-pane>
-      <!--<a-tab-pane key="4" tab="Nilai Ideal Positif / Negatif">
-        <a-table
-          :columns="datamatrixbobotnormalisasi.columns"
-          :data-source="datamatrixbobotnormalisasi.data"
-          class="table-dark"
-          :bordered="true"
-          :pagination="false"
-          size="small"
-          :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
-        >
-        </a-table>
-      </a-tab-pane>-->
+        <a-tab-pane key="4" tab="Nilai Ideal Positif / Negatif">
+          <div v-for="(x, indexheader) in datatest" :key="indexheader">
+            <a-list bordered :data-source="x">
+              <a-list-item slot="renderItem" slot-scope="item, index">
+                <a-tag v-if="index === 0" color="cyan">Solusi Ideal Negatif </a-tag>
+                <a-tag v-else color="green">Solusi Ideal Positif</a-tag>
+                {{ item }}
+              </a-list-item>
+              <div slot="header">
+                {{ indexheader }}
+              </div>
+            </a-list>
+          </div>
+        </a-tab-pane>
+        <a-tab-pane key="5" tab="Jarak Ideal Positif/Negatif">
+          <div v-for="(x, indexheader) in datajarakideal" :key="indexheader">
+            <a-list bordered :data-source="x">
+              <a-list-item slot="renderItem" slot-scope="item, index">
+                <a-tag v-if="index === 0" color="cyan">Solusi Ideal Negatif </a-tag>
+                <a-tag v-else color="green">Solusi Ideal Positif</a-tag>
+                {{ item }}
+              </a-list-item>
+              <div slot="header">
+                {{ indexheader }}
+              </div>
+            </a-list>
+          </div>
+        </a-tab-pane>
+
+        <a-tab-pane key="6" tab="Nilai preferensi">
+          <a-table
+            :columns="datapreferensi.columns"
+            :data-source="datapreferensi.data"
+            class="table-dark"
+            :bordered="true"
+            :pagination="false"
+            size="small"
+          >
+          </a-table>
+        </a-tab-pane>
+        <a-tab-pane key="7" tab="Ranking">
+          <a-table
+            :columns="dataranking.columns"
+            :data-source="dataranking.data"
+            class="table-dark"
+            :bordered="true"
+            :pagination="false"
+            size="small"
+          >
+          </a-table>
+        </a-tab-pane>
       </a-tabs>
     </a-card>
   </div>
@@ -106,12 +145,53 @@
             ]
         }
     ]
+    const columnspref = [
+        {
+            title: 'Nama',
+            dataIndex: 'nama',
+            key: 'nama'
+        },
+        {
+            title: 'Hasil',
+            dataIndex: 'nilai',
+            key: 'nilai'
+        }
+    ]
+    const columnsrank = [
+        {
+            title: 'Rank',
+            dataIndex: 'rank',
+            key: 'rank'
+        },
+        {
+            title: 'Nama',
+            dataIndex: 'nama',
+            key: 'nama'
+        },
+        {
+            title: 'Hasil',
+            dataIndex: 'nilai',
+            key: 'nilai'
+        }
+    ]
     export default {
         name: 'Index',
         data () {
             return {
+                datatest: {
+                },
+                datajarakideal: {
+                },
                 datamatrix: {
                     columns: columns,
+                    data: []
+                },
+                dataranking: {
+                    columns: columnsrank,
+                    data: []
+                },
+                datapreferensi: {
+                    columns: columnspref,
                     data: []
                 },
                 datamatrixnormalisasi: {
@@ -126,8 +206,31 @@
         },
         methods: {
             fetch () {
+                this.$http.get('api/v1/matrix/nilaiideal').then(data => {
+                    Object.values(data.data).forEach(val => {
+                        console.log('x', val)
+                        this.datatest = val
+                    })
+
+                    console.log('testx', this.datatest)
+                })
+                this.$http.get('api/v1/matrix/jarakideal').then(data => {
+                    Object.values(data.data).forEach(val => {
+                        console.log('x', val)
+                        this.datajarakideal = val
+                    })
+                })
+                /* this.$http.get('api/v1/matrix/jarakideal').then(data => {
+                  console.log('x', data)
+                }) */
                 this.$http.get('api/v1/matrix/hasil').then(data => {
                   this.datamatrix.data = data.data
+                })
+                this.$http.get('api/v1/matrix/preferensi').then(data => {
+                    this.datapreferensi.data = data.data[0]
+                })
+                this.$http.get('api/v1/matrix/ranking').then(data => {
+                    this.dataranking.data = data.data
                 })
                 this.$http.get('api/v1/matrix/normalisasi').then(data => {
                     this.datamatrixnormalisasi.data = data.data
@@ -140,6 +243,13 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+.ant-list-header{
+  color:#fff;
+  background: #f5222d !important;
+  background: linear-gradient(
+    163deg
+    , #f5222d 1%, #6d0019 100%) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5222d', endColorstr='#6d0019', GradientType=1);
+}
 </style>
