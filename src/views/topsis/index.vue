@@ -90,6 +90,18 @@
           >
           </a-table>
         </a-tab-pane>
+        <a-tab-pane key="8" tab="Peralatan">
+          <div v-for="(x, indexheader) in dataalat" :key="indexheader">
+            <a-list bordered :data-source="x">
+              <a-list-item slot="renderItem" slot-scope="item">
+                {{ item }}
+              </a-list-item>
+              <div slot="header">
+                {{ indexheader }}
+              </div>
+            </a-list>
+          </div>
+        </a-tab-pane>
       </a-tabs>
     </a-card>
   </div>
@@ -180,6 +192,8 @@
             return {
                 datatest: {
                 },
+                dataalat: {
+                },
                 datajarakideal: {
                 },
                 datamatrix: {
@@ -210,6 +224,14 @@
                     Object.values(data.data).forEach(val => {
                         console.log('x', val)
                         this.datatest = val
+                    })
+
+                    console.log('testx', this.datatest)
+                })
+                this.$http.get('api/v1/matrix/alat').then(data => {
+                    Object.values(data.data).forEach(val => {
+                        console.log('x', val)
+                        this.dataalat = val
                     })
 
                     console.log('testx', this.datatest)
