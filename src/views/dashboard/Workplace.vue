@@ -9,6 +9,55 @@
       <a-row :gutter="16">
         <div class="card-container">
           <a-col :span="12">
+            <a-card title="Data Alternatif">
+              <a-space size="small" slot="extra">
+                <a-button type="primary" :loading="dataalternatif.loading" @click="fetchAlternatif()">
+                  <a-icon type="reload" />  Refresh data
+                </a-button>
+                <a-button slot="extra" type="primary" @click="showAlternatif()"> <a-icon type="plus" /> Alternatif </a-button>
+              </a-space>
+              <a-row>
+                <a-col>
+                  <a-table
+                    class="table-dark"
+                    :bordered="true"
+                    :data-source="dataalternatif.data"
+                    :loading="dataalternatif.loading"
+                    :pagination="false"
+                    :row-key="record => 'b_' + record.id_alternatif"
+                    @change="handleTableChangeperfomance"
+                    size="small"
+                    :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
+                  >
+                    <a-table-column data-index="id_alternatif">
+                      <span slot="title">ID Alternatif</span>
+                    </a-table-column>
+                    <a-table-column data-index="nm_alternatif">
+                      <span slot="title">Nama Alternatif</span>
+                    </a-table-column>
+                    <a-table-column title="Action">
+                      <template slot-scope="text, record">
+                        <span>
+                          <a-button block type="primary" ghost @click="showMatrix(record.id_alternatif)"><a-icon type="setting"/> Matrix</a-button>
+                        </span>
+                      </template>
+                    </a-table-column>
+                  </a-table>
+                </a-col>
+              </a-row>
+              <TambahAlternatif ref="TambahAlternatif"/>
+            </a-card>
+            <a-drawer
+              title="Matrix"
+              :width="720"
+              :visible="visiblematrix"
+              :body-style="{ paddingBottom: '80px' }"
+              @close="onCloseMatrix"
+            >
+              <Matrix :matrixid="matrixID"></Matrix>
+            </a-drawer>
+          </a-col>
+          <a-col :span="12">
             <a-card title="Data Kriteria">
               <a-space size="small" slot="extra">
                 <a-button type="primary" :loading="datakriteria.loading" @click="fetchkriteria()">
@@ -67,56 +116,35 @@
             </a-card>
           </a-col>
           <a-col :span="12">
-            <a-card title="Data Alternatif">
+            <a-card title="Data Alat">
               <a-space size="small" slot="extra">
-                <a-button type="primary" :loading="dataalternatif.loading" @click="fetchAlternatif()">
+                <a-button type="primary" :loading="dataalat.loading" @click="fetchAlat()">
                   <a-icon type="reload" />  Refresh data
                 </a-button>
-                <a-button slot="extra" type="primary" @click="showAlternatif()"> <a-icon type="plus" /> Alternatif </a-button>
+                <a-button type="primary" @click="showAlat()"> <a-icon type="plus" /> Alat</a-button>
               </a-space>
+              <TambahAlat ref="TambahAlat"/>
               <a-row>
-                <a-col>
-                  <a-table
-                    class="table-dark"
-                    :bordered="true"
-                    :data-source="dataalternatif.data"
-                    :loading="dataalternatif.loading"
-                    :pagination="false"
-                    :row-key="record => 'b_' + record.id_alternatif"
-                    @change="handleTableChangeperfomance"
-                    size="small"
-                    :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
-                  >
-                    <a-table-column data-index="id_alternatif">
-                      <span slot="title">ID Alternatif</span>
-                    </a-table-column>
-                    <a-table-column data-index="nm_alternatif">
-                      <span slot="title">Nama Alternatif</span>
-                    </a-table-column>
-                    <a-table-column title="Action">
-                      <template slot-scope="text, record">
-                        <span>
-                          <a-button type="primary" ghost @click="showMatrix(record.id_alternatif)"><a-icon type="setting"/> Matrix {{ record.nm_alternatif }}</a-button>
-                        </span>
-                      </template>
-                    </a-table-column>
-                  </a-table>
+                <a-col> <a-table
+                  class="table-dark"
+                  :bordered="true"
+                  :data-source="dataalat.data"
+                  :loading="dataalat.loading"
+                  :pagination="false"
+                  :row-key="record => 'a_' + record.id_kriteria"
+                  @change="handleTableChangeperfomance"
+                  size="small"
+                  :rowClassName="(record, index) => record.regional === 'AREA I' ? 'highlight' : false"
+                >
+                  <a-table-column data-index="nm_alternatif">
+                    <span slot="title">nama alat</span>
+                  </a-table-column>
+                </a-table>
                 </a-col>
               </a-row>
-              <TambahAlternatif ref="TambahAlternatif"/>
             </a-card>
-            <a-drawer
-              title="Matrix"
-              :width="720"
-              :visible="visiblematrix"
-              :body-style="{ paddingBottom: '80px' }"
-              @close="onCloseMatrix"
-            >
-              <Matrix :matrixid="matrixID"></Matrix>
-            </a-drawer>
           </a-col>
         </div>
-
       </a-row>
     </div>
   </page-view>
@@ -131,6 +159,7 @@
   import { Radar } from '@/components'
   import Tambah from '@/views/kriteria/TambahKriteria'
   import TambahAlternatif from '@/views/alternatif/tambah'
+  import TambahAlat from '@/views/alat/tambah'
   import Matrix from '@/views/matrix'
   import moment from 'moment'
   // import { latLng } from 'leaflet'
@@ -146,7 +175,8 @@
       HeadInfo,
       Radar,
         Tambah,
-        TambahAlternatif
+        TambahAlternatif,
+        TambahAlat
     },
     data () {
       return {
@@ -174,6 +204,10 @@
           loading: false
         },
         dataalternatif: {
+            data: [],
+            loading: false
+        },
+        dataalat: {
             data: [],
             loading: false
         },
@@ -267,6 +301,9 @@
         },
         showAlternatif () {
             this.$refs.TambahAlternatif.show(1)
+        },
+        showAlat () {
+            this.$refs.TambahAlat.show(1)
         },
         showDrawer () {
             this.visible = true
@@ -366,6 +403,14 @@
                 // console.log(data.data)
                 this.dataalternatif.data = data.data
                 this.dataalternatif.loading = false
+            })
+        },
+        fetchAlat () {
+            this.dataalat.loading = true
+            this.$http.get('/api/v1/alat').then(data => {
+                // console.log(data.data)
+                this.dataalat.data = data.data
+                this.dataalat.loading = false
             })
         },
       onChangeDataserah (date, dateString) {

@@ -26,6 +26,21 @@
       </a-tooltip>
     </a-form-model-item>
   </a-form-model>
+    <a-form-model v-bind="layout">
+      <a-form-model-item has-feedback label="Alat">
+        <a-form-model-item style="margin-bottom: 0px;">
+          <a-checkbox-group v-model="formAlat[input.id]" v-for="(input,k) in alat" :key="k" >
+            <a-checkbox :value="input.id">{{ input.name }}</a-checkbox>
+          </a-checkbox-group>
+        </a-form-model-item>
+      </a-form-model-item>
+      <a-form-model-item :wrapper-col="{ span: 18, offset: 6 }">
+        <a-button type="primary" @click="submitAlat()">
+          Submit Alat
+        </a-button>
+      </a-form-model-item>
+    </a-form-model>
+    {{ formAlat }}
     <!--<span>{{ formMatrix }}</span>
     <p>{{ Object.keys(formMatrix).length }}</p>
     <p>{{ this.lengthMatrix }}</p>-->
@@ -48,8 +63,12 @@
                 },
                 formMatrix: {
                 },
+                formAlat: [],
                 lengthMatrix: 0,
+                lengthAlat: 0,
                 datakriteria: [],
+                dataalat: [],
+                alat: [],
                 kriteria: [],
                 confirmLoading: false,
                 visible: false,
@@ -65,8 +84,18 @@
         },
         mounted () {
             this.loadMatrix(this.matrixid)
+            this.loadAlat(this.matrixid)
         },
         methods: {
+            addAlat (record) {
+                if (record.id_alternatif > 0) {
+                    this.alat.push({
+                        name: record.nm_alternatif,
+                        id: record.id_alternatif
+                    })
+                }
+                return true
+            },
             addKriteria (record) {
                 if (record.id_kriteria > 0) {
                     this.kriteria.push({
@@ -81,6 +110,13 @@
                 this.kriteria.length = 0
                 this.lengthMatrix = 0
                 this.formMatrix = {}
+                return true
+            },
+            clearAlat () {
+                this.loading = true
+                this.alat.length = 0
+                this.lengthAlat = 0
+                this.formAlat = {}
                 return true
             },
             loadMatrix (newVal) {
@@ -103,6 +139,26 @@
                 })
               return true
             },
+            loadAlat (newVal) {
+                this.$http.get('api/v1/alternatif/' + newVal).then(data => {
+                    this.clearAlat()
+                    if (data) {
+                        this.form.name = data.data.nm_alternatif
+                        this.form.id = data.data.id_alternatif
+                        this.$http.get('api/v1/alat').then(data => {
+                            this.dataalat = data.data
+                            this.lengthAlat = Object.keys(this.dataalat).length
+                            Object.keys(this.dataalat).forEach(key => {
+                                console.log(this.dataalat[key]) // the value of the current key.
+                                this.addAlat(this.dataalat[key])
+                            })
+                        })
+                        this.addAlat(this.dataalat)
+                        this.loading = false
+                    }
+                })
+                return true
+            },
             show () {
                 this.visible = true
                 return true
@@ -114,6 +170,19 @@
                 console.log(this.form)
                 this.$http.post('api/v1/matrix', {
                     kriteria: this.formMatrix,
+                    alternatif: this.form.id
+                })
+                /* this.ModalText = 'The modal will be closed after two seconds'
+                this.confirmLoading = true
+                setTimeout(() => {
+                    this.visible = false
+                    this.confirmLoading = false
+                }, 2000) */
+            },
+            submitAlat (e) {
+                console.log(this.formAlat)
+                this.$http.post('api/v1/alatmatrix', {
+                    alat: this.formAlat,
                     alternatif: this.form.id
                 })
                 /* this.ModalText = 'The modal will be closed after two seconds'
